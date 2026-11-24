@@ -448,7 +448,7 @@ function go(i){
  cur=Math.max(0,Math.min(S.length-1,i));const s=S[cur];clear();
  svg.classList.toggle('focus',cur>0);svg.classList.toggle('brk',!!s.brk);
  mark(s.c,s.l);
- $('ph').hidden=true;
+ const SP=[0,'comp','gov_r','dryer_bx','sv','cv','foot','foot','qrv','relay','park','tsv','gh_blue','tpv','spr'],pf=SP[cur];$('ph').style.display=pf?'block':'none';if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+SB[cur]}
  $('kk').textContent=cur===0?'Overview':`Step ${cur} of ${S.length-1}`;$('tt').textContent=s.t;$('tx').textContent=s.x;
  $('ck').hidden=!s.k;$('ck').textContent=s.k||'';
  chips.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-current',j===cur));
@@ -458,7 +458,7 @@ function pick(id){
  const o=C.find(c=>c.id===id);clear();svg.classList.add('focus');svg.classList.remove('brk');
  const ls=L.filter(l=>l.p.some(p=>p.some(([x,y])=>near(o,x,y)))).map(l=>l.id);
  mark([id],ls);$('c-'+id).classList.add('sel');
- const pf=o.cp||o.ph;$('ph').hidden=!pf;if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+o.n}
+ const pf=o.cp||o.ph;$('ph').style.display=pf?'block':'none';if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+o.n}
  $('kk').textContent='Part';$('tt').textContent=o.n;$('tx').textContent=o.w1;$('ck').hidden=false;$('ck').textContent=o.c;
  chips.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',false));
 }
