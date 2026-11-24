@@ -448,7 +448,7 @@ function go(i){
  cur=Math.max(0,Math.min(S.length-1,i));const s=S[cur];clear();
  svg.classList.toggle('focus',cur>0);svg.classList.toggle('brk',!!s.brk);
  mark(s.c,s.l);
- const SP=[0,'comp','gov_r','dryer_bx','sv','cv','foot','foot','qrv','relay','park','tsv','gh_blue','tpv','spr'],pf=SP[cur];$('ph').style.display=pf?'block':'none';if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+SB[cur]}
+ const SP=[0,'comp','gov_r','dryer_bx','sv','cv','foot','foot','qrv','relay','park','tsv','foot|hand|gh_blue','tpv','spr'],NM={comp:'Air compressor',gov_r:'Governor',dryer_bx:'Air dryer',sv:'Safety valve',cv:'One-way check valve',foot:'Foot valve',qrv:'Quick release valve',relay:'Relay valve',park:'Parking brake valve (yellow)',tsv:'Trailer supply valve (red)',hand:'Trailer hand valve',gh_blue:'Service line glad hand (blue)',tpv:'Tractor protection valve',spr:'Brake chamber'},pf=SP[cur];$('ph').style.display='none';let pr=$('phr');if(!pr){pr=document.createElement('div');pr.id='phr';pr.style.cssText='display:flex;gap:14px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:0 auto 10px';$('ph').after(pr)}pr.innerHTML='';pr.style.display=pf?'flex':'none';if(pf)pf.split('|').forEach(k=>{const f=document.createElement('figure');f.style.cssText='margin:0;text-align:center;flex:1 1 0;min-width:90px';const m=document.createElement('img');m.src=PH[k];m.alt='Photo: '+NM[k];m.style.cssText='display:block;margin:0 auto;max-width:100%;max-height:150px;object-fit:contain';const c=document.createElement('figcaption');c.textContent=NM[k];c.style.cssText='font-size:14px;font-weight:700;margin-top:4px';f.append(m,c);pr.append(f)})
  $('kk').textContent=cur===0?'Overview':`Step ${cur} of ${S.length-1}`;$('tt').textContent=s.t;$('tx').textContent=s.x;
  $('ck').hidden=!s.k;$('ck').textContent=s.k||'';
  chips.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-current',j===cur));
@@ -458,7 +458,7 @@ function pick(id){
  const o=C.find(c=>c.id===id);clear();svg.classList.add('focus');svg.classList.remove('brk');
  const ls=L.filter(l=>l.p.some(p=>p.some(([x,y])=>near(o,x,y)))).map(l=>l.id);
  mark([id],ls);$('c-'+id).classList.add('sel');
- const pf=o.cp||o.ph;$('ph').style.display=pf?'block':'none';if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+o.n}
+ const pf=o.cp||o.ph;$('phr')&&($('phr').style.display='none');$('ph').style.display=pf?'block':'none';if(pf){$('ph').src=PH[pf];$('ph').alt='Photo: '+o.n}
  $('kk').textContent='Part';$('tt').textContent=o.n;$('tx').textContent=o.w1;$('ck').hidden=false;$('ck').textContent=o.c;
  chips.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',false));
 }
